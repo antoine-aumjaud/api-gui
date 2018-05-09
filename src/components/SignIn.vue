@@ -4,14 +4,13 @@
     <form>
       <fieldset>
         <label>Login</label> 
-        <input type="text" name="login" v-model="login" />
+        <input type="text" name="login" placeholder="Votre nom.." v-model="login"/>
       </fieldset>
       <fieldset>
         <label>Mot de passe</label> 
-        <input type="password" name="password" v-model="password" />
+        <input type="password" name="password" placeholder="Votre mot de passe..." v-model="password" />
       </fieldset>
-
-      <button type="button" @click="save()">Enregistrer</button>
+      <button type="button" @click="connect()">Se connecter</button>
     </form>
     <span v-if="!success" class="failed">Echec d'authentification</span>
   </div>
@@ -32,7 +31,7 @@
     },
     
     methods: {
-      async save() {
+      async connect() {
         this.success = await secureServices.auth(this.login, this.password);
         if(this.success) { this.$router.go(-1); /*this.$router.push('/')*/ }
       }
@@ -44,4 +43,7 @@
   .failed {
     color: red;
   }
+
+
+  
 </style>

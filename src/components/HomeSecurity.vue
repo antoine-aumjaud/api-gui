@@ -3,11 +3,11 @@
     <h2>Securité</h2>
     <div v-if="!isActivated">
       La sécurité est désactivée. <br/>
-      <button type="button" @click="activate()">ACTIVER</button>
+      <button type="button" class="activate" @click="activate()">ACTIVER</button>
     </div>
     <div v-else>
       La sécurité est ACTIVE. <br/>
-      <button type="button" @click="deactivate()">DESACTIVER</button>
+      <button type="button" class="deactivate" @click="deactivate()">DESACTIVER</button>
     </div>
   </div>
 </template>
@@ -40,4 +40,17 @@
 </script>
 
 <style scoped>
+  #app button.activate {
+    background-color: rgb(62, 110, 66); 
+  }
+  #app button.activate:hover {
+    background-color: #4CAF50;
+  }
+    
+  #app button.deactivate {
+    background-color: rgb(138, 54, 54);
+  }
+  #app button.deactivate:hover {
+    background-color: rgb(182, 56, 56);
+  }
 </style>
