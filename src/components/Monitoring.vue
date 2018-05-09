@@ -18,8 +18,8 @@
         apps: []
       }
     },
-    async created () {
-      this.apps = await monitoringService.getApps();
+    created () {
+      this.apps = monitoringService.getApps();
     },
     components: {
       MonitoringApp

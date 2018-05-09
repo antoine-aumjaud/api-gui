@@ -1,27 +1,42 @@
-const LOCAL_CORS = "http://localhost:9080/";
-//const PROD = "https://";
-const PROTOCOL = LOCAL_CORS;
-
 let secureToken;
 
+function getTokenPayload() {
+  return JSON.parse(atob(secureToken.split('.')[1]));
+}
 function isTokenValid() {
-  return secureToken && btoa(secureToken.split('\\.')[1]).exp * 1000 /*in ms*/ + 10 /*margin*/ < Date.now() 
+  return secureToken != null && getTokenPayload().exp * 1000 /*in ms*/ + 10 /*margin*/ < Date.now() 
+}
+function getTokenLogin() {
+  return secureToken != null ? getTokenPayload().login : null;
 }
 
-function auth(login, password) {
-  return fetch(PROTOCOL + "api-authenticate.aumjaud.fr/auth", 
-    {
+async function auth(login, password) {
+  const data = new FormData();
+  data.append("login", login)
+  data.append("password", password );
+
+  const response = await fetch("https://api-authenticate.aumjaud.fr/auth", {
       method: 'POST', 
-      headers: {'Accept': 'application/json'}, 
-      body: "login=" + login + "&password=" + password
-    }).then(response => {
-      if(response.status == 200) secureToken = response.json().token;
-      else throw response.status;
-    });
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'Accept': 'application/json'
+      },
+      body: "login=" + encodeURIComponent(login) + "&password=" + encodeURIComponent(password)
+  });
+  if(response.status == 200) {
+    const json = await response.json();
+    if(json.error) throw json.error;
+    secureToken = json.token;
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
-function secureFetch(url, options) {
-  if(!options) options = {};
+function secureFetch(url, options = {}) {
+  if(!secureToken) throw "Not identified";
+
   if(!options.headers) options.headers = {};
   options.headers.Authorization = "Bearer " + secureToken;
 
@@ -30,6 +45,7 @@ function secureFetch(url, options) {
 
 export default {
   isTokenValid,
+  getTokenLogin,
   auth,
   secureFetch
 }

@@ -1,5 +1,6 @@
 <template>
-  <div class="signin">
+  <div>
+    <h2>Connexion</h2>
     <form>
       <fieldset>
         <label>Login</label> 
@@ -31,14 +32,16 @@
     },
     
     methods: {
-      save() {
-        secureServices.auth(this.login, this.password)
-          .then(() => this.success = true)
-          .catch(() => this.success = false);
+      async save() {
+        this.success = await secureServices.auth(this.login, this.password);
+        if(this.success) { this.$router.go(-1); /*this.$router.push('/')*/ }
       }
     }
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  .failed {
+    color: red;
+  }
 </style>

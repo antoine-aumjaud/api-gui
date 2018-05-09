@@ -1,31 +1,22 @@
-/*
-npm install cors-anywhere
-cd nodes_modules/cors-anywhere
-export PORT=9080
-node server.js
-Running CORS Anywhere on 0.0.0.0:9080
- */
-const LOCAL_CORS = "http://localhost:9080/";
-//const PROD = "https://";
-const PROTOCOL = LOCAL_CORS;
-
 function getApps () {
   const apps = [
-    {"uid":"api-traefik",          "name": "API Traefik",            "type": "url"   , "url": "api-traefik.aumjaud.fr/dashboard/", "returnStatus": 401},
     {"uid":"api-authenticate",     "name": "API Authenticate",       "type": "docker"},
     {"uid":"api-docker",           "name": "API Docker",             "type": "docker"},
     {"uid":"api-synology-chatbot", "name": "API Synology Chatbot",   "type": "docker"},
-    {"uid":"api-family",           "name": "API Famille",            "type": "docker"},
+    {"uid":"api-family",           "name": "API Family",             "type": "docker"},
     {"uid":"api-home-security",    "name": "API Home Security",      "type": "docker"},
     {"uid":"api-nabaztag",         "name": "API Nabaztag",           "type": "docker"},
     {"uid":"api-file",             "name": "API File",               "type": "docker"},
     {"uid":"api-shopping-list",    "name": "API Shopping List",      "type": "docker"},
-    {"uid":"antoine.aumjaud",      "name": "Site Antoine",           "type": "url"   , "url": "antoine.aumjaud.fr/cv/"},
-    {"uid":"admin.aumjaud",        "name": "DS Admin",               "type": "url"   , "url": "admin.aumjaud.fr"},
-    {"uid":"file.aumjaud",         "name": "DS File",                "type": "url"   , "url": "aumjaud.fr/file/"},
-    {"uid":"aumjaud/photo",        "name": "DS Photos",              "type": "url"   , "url": "aumjaud.fr/photo/"},
-    {"uid":"surveillance.aumjaud", "name": "DS Surveillance",        "type": "url"   , "url": "surveillance.aumjaud.fr"},
-    {"uid":"security-api.aumjaud", "name": "API Home Security HTTP", "type": "url"   , "url": "security-api.aumjaud.fr:81", "returnStatus": 401},
+    /*    
+    {"uid":"api-traefik",          "name": "API Traefik",            "type": "url"   , "url": "https://api-traefik.aumjaud.fr/dashboard/", "returnStatus": 401},
+    {"uid":"antoine.aumjaud",      "name": "Site Antoine",           "type": "url"   , "url": "https://antoine.aumjaud.fr/cv/"},
+    {"uid":"admin.aumjaud",        "name": "DS Admin",               "type": "url"   , "url": "https://admin.aumjaud.fr"},
+    {"uid":"file.aumjaud",         "name": "DS File",                "type": "url"   , "url": "https://aumjaud.fr/file/"},
+    {"uid":"aumjaud/photo",        "name": "DS Photos",              "type": "url"   , "url": "https://aumjaud.fr/photo/"},
+    {"uid":"surveillance.aumjaud", "name": "DS Surveillance",        "type": "url"   , "url": "https://surveillance.aumjaud.fr"},
+    {"uid":"security-api.aumjaud", "name": "API Home Security HTTP", "type": "url"   , "url": "http://security-api.aumjaud.fr:81", "returnStatus": 401},
+    */
   ];
   
   apps.forEach(app => {
@@ -33,10 +24,10 @@ function getApps () {
 
     switch(app.type) {
       case "docker": 
-        callMethod(app, PROTOCOL + app.uid + '.aumjaud.fr/hi');
+        callMethod(app, "https://" + app.uid + '.aumjaud.fr/hi');
         break;
       case "url": 
-        callMethod(app, PROTOCOL + app.url);
+        callMethod(app, app.url);
         break;
       default: 
         throw "Unknown app type: " + app.type;
