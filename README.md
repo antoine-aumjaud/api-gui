@@ -1,3 +1,3 @@
 # API GUI
 
-Link: ???.aumjaud.fr
+Link: canda.aumjaud.fr
