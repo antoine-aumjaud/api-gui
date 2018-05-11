@@ -8,7 +8,7 @@
       </fieldset>
       <fieldset>
         <label>Mot de passe</label> 
-        <input type="password" name="password" placeholder="Votre mot de passe..." v-model="password" />
+        <input type="password" name="password" placeholder="Votre mot de passe..." v-model="password"  @keyup.enter="connect()" />
       </fieldset>
       <button type="button" @click="connect()">Se connecter</button>
     </form>

@@ -1,13 +1,14 @@
 let secureToken;
+let isRenewingToken = false;
 
 function getTokenPayload() {
   return JSON.parse(atob(secureToken.split('.')[1]));
 }
 function isTokenValid() {
-  return secureToken != null && getTokenPayload().exp * 1000 /*in s*/ - 5 /*margin 5s*/ > Date.now() 
+  return secureToken != null && getTokenPayload().exp * 1000 /*in ms*/ - 5*1000 /*margin 5s*/ > Date.now();
 }
 function isTokenShouldBeRenew() {
-  return secureToken != null && getTokenPayload().exp * 1000 /*in s*/ - 60 /*margin 60s*/ < Date.now() 
+  return secureToken != null && getTokenPayload().exp * 1000 /*in ms*/ - 60*1000 /*margin 60s*/ < Date.now();
 }
 function getTokenLogin() {
   return secureToken != null ? getTokenPayload().login : null;
@@ -16,7 +17,7 @@ function getTokenLogin() {
 async function auth(login, password) {
   console.info("Try to login with user '%s'", login);
   try {
-    const json = await unsecureFetchJson('api-authenticate', 'auth', {
+    const json = await unsecureFetchJson('api-authenticate', 'userSign', {
         method: 'POST', 
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
         body: "login=" + encodeURIComponent(login) + "&password=" + encodeURIComponent(password)
@@ -31,40 +32,27 @@ async function auth(login, password) {
   }
 }
 async function renewToken() {
+  if(isRenewingToken) return;
+  isRenewingToken = true;
   const login = getTokenLogin();
   console.info("Token will be expire, renew it with user '%s'", login);
   try {
-    const json = await secureFetchJson('api-authenticate', 'secure/auth', {
+    const json = await secureFetchJson('api-authenticate', 'secure/renewUserSign', {
         method: 'POST', 
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
         body: "login=" + encodeURIComponent(login)
     });
     secureToken = json.token;
-    return true;
   } 
   catch(e) {
     console.error(e);
-    secureToken = null;
-    return false;
+  }
+  finally {
+    isRenewingToken = false;
   }
 }
 
-/*
-GUI
-- TEST RENEW
-- ERREUR JS FAMILLE
-- FAMILLE
-  - GRAPH
-  - FORM
-- MENU SUR PORTABLE
-
-- SERVICE FAMILLE ERREUR KG
-- SERVICE CHATBOT INUPT UNKNOWN
-
-*/
-
-
- function securefetch(url, options = {}) {
+function securefetch(url, options = {}) {
   //TODO redirect to signin vue
   if(!isTokenValid()) throw "Not identified";
   if(isTokenShouldBeRenew()) renewToken();
