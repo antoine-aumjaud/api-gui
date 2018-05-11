@@ -1,14 +1,27 @@
 <template>
   <div class="app" :class="app.status">
     <div class="title">{{ app.name }}</div>
-    <div class="details">{{ app.error }}</div>
+    <div class="infos" v-if="app.infos">{{app.infos.version}} - {{app.infos.buildDate}}</div>
+    <div class="error">{{ app.error }}</div>
+    <div v-if="isConnected" class="actions">
+      <button type="button" v-for="action in app.actions" :key="action.method" @click="doAction(app, action)">{{action.name}}</button>
+    </div>
+    
   </div>
 </template>
 
 <script>
+  import monitoringService from '../services/monitoring-services'
+
   export default {
     name: 'monitoring-app',
-    props: ['app']
+    props: ['app', 'isConnected'],
+       
+    methods: {
+      doAction(app, action) {
+        monitoringService.doAction(app, action);
+      }
+    }
   }
 </script>
 
@@ -34,8 +47,16 @@
     .title {
       font-size: 1.1em;
     }
-    .details {
+    .infos {
       font-size: 0.9em;
     }
+    .error {
+      font-size: 0.9em;
+      color: red;
+    }
+
+  }
+  #app button {
+    padding: 3px 10px 3px 10px;
   }
 </style>

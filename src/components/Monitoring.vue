@@ -2,7 +2,7 @@
   <div>
     <h2>Monitoring</h2>
     <div class="monitoring">
-      <monitoring-app :app="app" v-for="app in apps" :key="app.uid"></monitoring-app>
+      <monitoring-app :app="app" :isConnected="isConnected" v-for="app in apps" :key="app.uid"></monitoring-app>
     </div>
   </div>
 </template>
@@ -10,16 +10,19 @@
 <script>
   import MonitoringApp from './MonitoringApp.vue'
   import monitoringService from '../services/monitoring-services'
+  import secureService from '../services/secure-services'
 
   export default {
     name: 'monitoring',
-    data () {
+    data() {
       return {
-        apps: []
+        apps: [],
+        isConnected: false
       }
     },
-    created () {
+    created() {
       this.apps = monitoringService.getApps();
+      this.isConnected = secureService.isTokenValid();
     },
     components: {
       MonitoringApp

@@ -18,22 +18,22 @@
 
   export default {
     name: 'home-security',
-    data () {
+    data() {
       return {
         isActivated: false
       }
     },
-    async created () {
+    async created() {
       this.isActivated = await homeSecurityService.isActivated();
     },
         
     methods: {
-      async activate () {
+      async activate() {
         this.isActivated = await homeSecurityService.activate();
       },
-      async deactivate () {
+      async deactivate() {
         let id = secureService.getTokenLogin();
-        this.isActivated = await homeSecurityService.deactivate(id);
+        this.isActivated = !await homeSecurityService.deactivate(id);
       }
     }
   }

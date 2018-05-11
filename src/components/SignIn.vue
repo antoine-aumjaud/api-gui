@@ -39,11 +39,8 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
   .failed {
     color: red;
   }
-
-
-  
 </style>

@@ -1,13 +1,16 @@
-function getApps () {
+import secureService from './secure-services.js'
+
+function getApps() {
   const apps = [
-    {"uid":"api-authenticate",     "name": "API Authenticate",       "type": "docker"},
-    {"uid":"api-docker",           "name": "API Docker",             "type": "docker"},
-    {"uid":"api-synology-chatbot", "name": "API Synology Chatbot",   "type": "docker"},
-    {"uid":"api-family",           "name": "API Family",             "type": "docker"},
-    {"uid":"api-home-security",    "name": "API Home Security",      "type": "docker"},
-    {"uid":"api-nabaztag",         "name": "API Nabaztag",           "type": "docker"},
-    {"uid":"api-file",             "name": "API File",               "type": "docker"},
-    {"uid":"api-shopping-list",    "name": "API Shopping List",      "type": "docker"},
+    {"uid":"api-authenticate",     "name": "API Authenticate",     "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
+    {"uid":"api-docker",           "name": "API Docker",           "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
+    {"uid":"api-synology-chatbot", "name": "API Synology Chatbot", "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
+    {"uid":"api-family",           "name": "API Family",           "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}, {"name": "Reset Cache", "methodType": "text", "method": "secure/resetCache"}]},
+    {"uid":"api-home-security",    "name": "API Home Security",    "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
+    {"uid":"api-nabaztag",         "name": "API Nabaztag",         "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
+    {"uid":"api-file",             "name": "API File",             "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
+    {"uid":"api-shopping-list",    "name": "API Shopping List",    "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}, {"name": "Reset Cache", "methodType": "text", "method": "secure/resetCache"}]},
+    //{"uid":"api-error",            "name": "API Error",            "actions": []},
     /*    
     {"uid":"api-traefik",          "name": "API Traefik",            "type": "url"   , "url": "https://api-traefik.aumjaud.fr/dashboard/", "returnStatus": 401},
     {"uid":"antoine.aumjaud",      "name": "Site Antoine",           "type": "url"   , "url": "https://antoine.aumjaud.fr/cv/"},
@@ -18,50 +21,36 @@ function getApps () {
     {"uid":"security-api.aumjaud", "name": "API Home Security HTTP", "type": "url"   , "url": "http://security-api.aumjaud.fr:81", "returnStatus": 401},
     */
   ];
-  
+
   apps.forEach(app => {
     app.status = "unknown";
-
-    switch(app.type) {
-      case "docker": 
-        callMethod(app, "https://" + app.uid + '.aumjaud.fr/hi');
-        break;
-      case "url": 
-        callMethod(app, app.url);
-        break;
-      default: 
-        throw "Unknown app type: " + app.type;
-    }
-
-  })
-
-  /*
-  return window
-    .fetch('https://bhvb4ch330.execute-api.eu-west-1.amazonaws.com/dev/recipes')
-    .then(response   => response.json())
-    .then(serverApps => apps.concat(serverApps))
-  */
-  return apps;
-}   
-
-function callMethod(app, url) {
-  window
-    .fetch(url)
-    .then(response => {
-      if(response.status == (app.returnStatus || 200)) {
+    secureService.unsecureFetchJson(app.uid, 'info')
+      .then(json => {
         app.status = "ok"
-      }
-      else {
+        app.infos = json; 
+      })
+      .catch(e => {
         app.status = "error";
-        app.error = response.status + ": " + response.statusText;
-      }
-    })
-    .catch(e => {
-      app.status = "error"; 
-      app.error = e
-    });
+        app.error = e.message;
+      })
+  });
+  return apps;
+}
+
+async function doAction(app, action) {
+  let content;
+  switch(action.methodType) {
+    case "text":
+      content = await secureService.secureFetchText(app.uid, action.method);
+      break;
+    case "json":
+      content = await secureService.secureFetchJson(app.uid, action.method);
+      break;
+  }
+  console.info("App '" + app.name + "', action '", action.name, "' => ", content); 
 }
 
 export default {
-  getApps
+  getApps,
+  doAction
 }

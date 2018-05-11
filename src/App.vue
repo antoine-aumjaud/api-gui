@@ -7,8 +7,8 @@
         <ul>
           <li><router-link to="/sign-in">Identification</router-link></li>
           <li><router-link to="/monitoring">Monitoring</router-link></li>
-          <li><router-link to="/home-security">Home - Security</router-link></li>
-          <li><a href="">Taille enfants</a></li>
+          <li><router-link to="/home-security">Home-Security</router-link></li>
+          <li><router-link to="/family">Famille</router-link></li>
         </ul>
       </nav>
     </header>
@@ -89,7 +89,7 @@
           float: left;
           display: block;
           font-size: 1.5em;
-          background-color: #5f5f5f;  
+          background-color: #578ac5;  
           a {
             color: white;
             text-decoration: none;
