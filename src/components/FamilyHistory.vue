@@ -11,12 +11,12 @@
     name: 'family-history',
     data() {
       return {
-        lastData: []
+        allData: []
       }
     },
     
     async created () {
-      this.lastData = await familyService.getLast();
+      this.allData = await familyService.getAll();
     },
 
     methods: {

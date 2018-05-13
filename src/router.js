@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Monitoring    from './components/Monitoring.vue'
-import SignIn        from './components/SignIn.vue'
-import HomeSecurity  from './components/HomeSecurity.vue'
-import Family        from './components/Family.vue'
-import FamilyHistory from './components/FamilyHistory.vue'
-import FamilyForm    from './components/FamilyForm.vue'
+import Monitoring     from './components/Monitoring.vue'
+import SignIn         from './components/SignIn.vue'
+import Family         from './components/Family.vue'
+import FamilyForm     from './components/FamilyForm.vue'
+import FamilyHistory  from './components/FamilyHistory.vue'
+import HomeAutomation from './components/HomeAutomation.vue'
 
 Vue.use(Router)
 
@@ -24,9 +24,9 @@ export default new Router({
       component: SignIn
     },
     {
-      path: '/home-security',
-      name: 'home-security',
-      component: HomeSecurity
+      path: '/home-automation',
+      name: 'home-automation',
+      component: HomeAutomation
     },
     {
       path: '/family',

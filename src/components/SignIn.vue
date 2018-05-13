@@ -4,11 +4,11 @@
     <form>
       <fieldset>
         <label>Login</label> 
-        <input type="text" name="login" placeholder="Votre nom.." v-model="login"/>
+        <input type="text" name="login" placeholder="Votre nom.." v-model="login" required="required"/>
       </fieldset>
       <fieldset>
         <label>Mot de passe</label> 
-        <input type="password" name="password" placeholder="Votre mot de passe..." v-model="password"  @keyup.enter="connect()" />
+        <input type="password" name="password" placeholder="Votre mot de passe..." v-model="password" required="required" @keyup.enter="connect()" />
       </fieldset>
       <div class="failed" v-html="error"></div>
       <button type="button" @click="connect()">Se connecter</button>

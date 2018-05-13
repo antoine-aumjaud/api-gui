@@ -1,9 +1,9 @@
 <template>
   <nav>
     <ul>
-      <li :class="$route.path == '/monitoring'    ? 'selected' : ''"><router-link to="/monitoring">Monitoring</router-link></li>
-      <li :class="$route.path == '/home-security' ? 'selected' : ''"><router-link to="/home-security">Home-Security</router-link></li>
-      <li :class="$route.path == '/family'        ? 'selected' : ''"><router-link to="/family">Famille</router-link></li>
+      <li :class="$route.path == '/monitoring'      ? 'selected' : ''"><router-link to="/monitoring">Monitoring</router-link></li>
+      <li :class="$route.path == '/home-automation' ? 'selected' : ''"><router-link to="/home-automation">Domotique</router-link></li>
+      <li :class="$route.path == '/family'          ? 'selected' : ''"><router-link to="/family">Famille</router-link></li>
     </ul>
   </nav>
 </template>

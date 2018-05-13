@@ -1,5 +1,8 @@
 import secureService from './secure-services.js'
 
+async function getAll() {
+  return await secureService.secureFetchJson('api-family', 'secure/members');
+}   
 async function getLast() {
   return await secureService.secureFetchJson('api-family', 'secure/members?filter=last');
 }   
@@ -33,7 +36,7 @@ async function saveShoesSize(firstname, value, date) {
 }
 
 export default {
-  getLast, 
+  getAll, getLast, 
   saveSize, saveWeight, saveShoesSize
 }
     

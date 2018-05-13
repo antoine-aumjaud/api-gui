@@ -55,7 +55,7 @@
       }
     },
     
-    async created () {
+    created () {
       secureServices.secureAccess();
     },
 
