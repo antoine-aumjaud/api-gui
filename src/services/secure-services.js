@@ -4,14 +4,14 @@ let isRenewingToken = false;
 function getTokenPayload() {
   return JSON.parse(atob(secureToken.split('.')[1]));
 }
+function getTokenLogin() {
+  return secureToken != null ? getTokenPayload().login : null;
+}
 function isTokenValid() {
   return secureToken != null && getTokenPayload().exp * 1000 /*in ms*/ - 5*1000 /*margin 5s*/ > Date.now();
 }
 function isTokenShouldBeRenew() {
-  return secureToken != null && getTokenPayload().exp * 1000 /*in ms*/ - 60*1000 /*margin 60s*/ < Date.now();
-}
-function getTokenLogin() {
-  return secureToken != null ? getTokenPayload().login : null;
+  return isTokenValid() && getTokenPayload().exp * 1000 /*in ms*/ - 60*1000 /*margin 60s*/ < Date.now();
 }
 
 async function auth(login, password) {
@@ -19,7 +19,6 @@ async function auth(login, password) {
   try {
     const json = await unsecureFetchJson('api-authenticate', 'userSign', {
         method: 'POST', 
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
         body: "login=" + encodeURIComponent(login) + "&password=" + encodeURIComponent(password)
     });
     secureToken = json.token;
@@ -39,7 +38,6 @@ async function renewToken() {
   try {
     const json = await secureFetchJson('api-authenticate', 'secure/renewUserSign', {
         method: 'POST', 
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
         body: "login=" + encodeURIComponent(login)
     });
     secureToken = json.token;
@@ -52,23 +50,33 @@ async function renewToken() {
   }
 }
 
-function securefetch(url, options = {}) {
-  //TODO redirect to signin vue
-  if(!isTokenValid()) throw "Not identified";
+function secureAccess() {
+  //Redirect if token is not valid
+  if(!isTokenValid()) window.location = "/#/sign-in";
+
+  //Renew token if it could be renewed
   if(isTokenShouldBeRenew()) renewToken();
+}
 
-  if(!options.headers) options.headers = {};
-  options.headers.Authorization = "Bearer " + secureToken;
+function securefetch(url, options) {
+  //Check if user is logged
+  secureAccess();
 
+  addHeader(options, 'Authorization', 'Bearer ' + secureToken);
   return window.fetch(url, options);
-  //TODO manage no access return
 }   
 
-function fetchJson(fetchApi, appName, path, options) {
+function isJson(body) {
+  return typeof body === 'object';
+}
+function addHeader(options, name, value) {
   if(!options.headers) options.headers = {};
-  options.headers.Accept = 'application/json';
+  options.headers[name] = value;
+}
+function fetchJson(fetchApi, appName, path, options) {
+  addHeader(options, 'Accept', 'application/json');
 
-  return fetchApi("https://" + appName + '.aumjaud.fr/' + path, options)
+  return fetchEmpty(fetchApi, appName, path, options)
     .then(response => {
       if(response.status >= 200 && response.status < 300) {
         return response.json();
@@ -80,7 +88,7 @@ function fetchJson(fetchApi, appName, path, options) {
 }
 
 function fetchText(fetchApi, appName, path, options) {
-  return fetchApi("https://" + appName + '.aumjaud.fr/' + path, options)
+  return fetchEmpty(fetchApi, appName, path, options)
     .then(response => {
       if(response.status >= 200 && response.status < 300) {
         return response.text();
@@ -91,6 +99,26 @@ function fetchText(fetchApi, appName, path, options) {
     });
 }
 
+function fetchEmpty(fetchApi, appName, path, options) {
+  if(options.body) {
+    if(isJson(options.body)) {
+      addHeader(options, 'Content-Type', 'application/json; charset=UTF-8');
+      options.body = JSON.stringify(options.body);
+    }
+    else {
+      addHeader(options, 'Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    }
+  }
+  
+  return fetchApi("https://" + appName + '.aumjaud.fr/' + path, options);
+}
+
+function unsecureFetch(appName, path, options = {}) {
+  return fetchEmpty(window.fetch, appName, path, options);
+}
+function secureFetch(appName, path, options = {}) {
+  return fetchEmpty(securefetch, appName, path, options);
+}
 
 function unsecureFetchJson(appName, path, options = {}) {
   return fetchJson(window.fetch, appName, path, options);
@@ -111,10 +139,24 @@ export default {
   isTokenValid,
   getTokenLogin,
   auth,
-  
+
+  //Check if user is authenticated, otherwhise redirect to signin page
+  secureAccess,
+
+  /*
+  For All fetch method :
+  - Content type and Accept are set automatically
+  - for json, options.body should be an object
+  */
+  //Fetch and return a reponse promise
+  secureFetch,
+  unsecureFetch, 
+
+  //Fetch and return a json content promise
   secureFetchJson,
   unsecureFetchJson,
   
+  //Fetch and return a text content promise
   unsecureFetchText,
   secureFetchText
 }

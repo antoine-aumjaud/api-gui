@@ -6,6 +6,7 @@ import SignIn        from './components/SignIn.vue'
 import HomeSecurity  from './components/HomeSecurity.vue'
 import Family        from './components/Family.vue'
 import FamilyHistory from './components/FamilyHistory.vue'
+import FamilyForm    from './components/FamilyForm.vue'
 
 Vue.use(Router)
 
@@ -37,6 +38,10 @@ export default new Router({
       name: 'family-history',
       component: FamilyHistory
     },
-    
+    {
+      path: '/family-form',
+      name: 'family-form',
+      component: FamilyForm
+    },
   ]
 })

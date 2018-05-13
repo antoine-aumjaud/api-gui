@@ -10,9 +10,9 @@
         <label>Mot de passe</label> 
         <input type="password" name="password" placeholder="Votre mot de passe..." v-model="password"  @keyup.enter="connect()" />
       </fieldset>
+      <div class="failed" v-html="error"></div>
       <button type="button" @click="connect()">Se connecter</button>
     </form>
-    <span v-if="!success" class="failed">Echec d'authentification</span>
   </div>
 </template>
 
@@ -24,23 +24,36 @@
 
     data() {
       return {
-        login:    this.login,
-        password: this.password,
-        success:  true
+        login:    null,
+        password: null,
+        error:    ''
       }
     },
     
     methods: {
       async connect() {
-        this.success = await secureServices.auth(this.login, this.password);
-        if(this.success) { this.$router.go(-1); /*this.$router.push('/')*/ }
+        //Checks
+        const errorMessage = [];
+        if(this.login == '') {
+          errorMessage.push('Entrez un nom');
+        } 
+        if(this.password == '') {
+          errorMessage.push('Entrez un mot de passe');
+        } 
+        if(errorMessage.length > 0) {
+          this.error = 'Erreur dans le formulaire : <ul><li>' + errorMessage.join('<li>') + '</ul>';
+        }
+        else {
+          //Call service
+          const success = await secureServices.auth(this.login, this.password);
+          
+          if(success) { this.$router.go(-1); /*this.$router.push('/')*/ /*this.error = ''*/ }
+          else { this.error = 'Echec d\'authentification'; }
+        }
       }
     }
   }
 </script>
 
 <style scoped>
-  .failed {
-    color: red;
-  }
 </style>
