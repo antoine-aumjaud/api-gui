@@ -144,18 +144,16 @@ export default {
   secureAccess,
 
   /*
-  For All fetch method :
-  - Content type and Accept are set automatically
-  - for json, options.body should be an object
+  For all fetch methods :
+  - Content-type and Accept are set automatically
+  - for json: options.body should be an object
   */
   //Fetch and return a reponse promise
   secureFetch,
   unsecureFetch, 
-
   //Fetch and return a json content promise
   secureFetchJson,
   unsecureFetchJson,
-  
   //Fetch and return a text content promise
   unsecureFetchText,
   secureFetchText
