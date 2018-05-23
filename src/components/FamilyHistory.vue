@@ -1,12 +1,7 @@
 <template>
   <div>
     <h2>Famille - Historique</h2>
-<!--
-    <div v-for="user in usersInfo" :key="user.name">
-      <input type="checkbox" v-model="user.checked" v-on:click="render()" :id="'checkbox_' + user.name">
-      <label :for="'checkbox_' + user.name">{{ user.name }}</label>
-    </div>
--->
+    
     <h3>Poids</h3>
     <family-history-chart v-if="loaded" :chartData="chartDataWeight" />
 
@@ -31,7 +26,7 @@
         chartDataWeight: [],
         usersInfo: [
           {name: 'Antoine', color: '#0B8043', checked: true}, 
-          {name: 'Camille', color: '#d81b60', checked: false},
+          {name: 'Camille', color: '#d81b60', checked: true},
           {name: 'Kyllian', color: '#3F51B5', checked: true}, 
           {name: 'Enola',   color: '#8e24aa', checked: true}, 
           {name: 'Maelynn', color: '#9e68af', checked: true}
@@ -42,7 +37,6 @@
     methods: {
       render() {
         this.loaded = false;
-console.log("aa")
         function formatSize(s) {
           if(!s.m)  s.m  = 0;
           if(!s.cm) s.cm = 0;
