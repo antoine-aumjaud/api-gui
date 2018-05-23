@@ -15,8 +15,16 @@
 
   export default {
     name: 'monitoring-app',
-    props: ['app', 'isConnected'],
-       
+    props:  {
+      app: {
+        type: String,
+        required: true
+      },
+      isConnected: {
+        type: Boolean,
+        required: true
+      }
+    },       
     methods: {
       doAction(app, action) {
         monitoringService.doAction(app, action);

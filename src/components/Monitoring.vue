@@ -2,13 +2,14 @@
   <div>
     <h2>Monitoring</h2>
     <div class="monitoring">
-      <monitoring-app :app="app" :isConnected="isConnected" v-for="app in apps" :key="app.uid"></monitoring-app>
+      <monitoring-app :app="app" :isConnected="isConnected" v-for="app in apps" :key="app.uid" />
     </div>
   </div>
 </template>
 
 <script>
   import MonitoringApp from './MonitoringApp.vue'
+  
   import monitoringService from '../services/monitoring-services'
   import secureService from '../services/secure-services'
 
