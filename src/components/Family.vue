@@ -3,6 +3,7 @@
     <h2>Famille</h2>
     <div>
       <router-link to="/family-form"    tag="button">Nouvelle entrée</router-link>
+      <router-link to="/family-history" tag="button">Historique</router-link>
   
       <table>
         <tr>
@@ -34,7 +35,6 @@
         </tr>
       </table>
 
-      <router-link to="/family-history" tag="button">Historique</router-link>
     </div>
   </div>
 </template>

@@ -17,7 +17,7 @@
     name: 'monitoring-app',
     props:  {
       app: {
-        type: String,
+        type: Object,
         required: true
       },
       isConnected: {

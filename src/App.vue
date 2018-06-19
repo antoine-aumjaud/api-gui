@@ -1,47 +1,67 @@
 <template>
-  <div id="app">
+    <v-app id="app">
+      <v-navigation-drawer
+        v-model="drawer"
+        fixed
+        app
+      >
 
-    <header>
-      <h1>Services Aumjaud</h1>
-      <nav-menu />
-    </header>
+      <v-list dense>
+        <v-list-tile :to="{path: '/monitoring'}">
+          <v-list-tile-action>
+            <v-icon>dashboard</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Monitoring</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile :to="{path: '/home-automation'}">
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Domotique</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile :to="{path: '/family'}">
+          <v-list-tile-action>
+            <v-icon>trending_up</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Famille</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
 
-    <section>
+    <v-toolbar color="indigo" dark fixed app>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title>Services Aumjaud</v-toolbar-title>
+    </v-toolbar>
+
+    <v-content>
+      <v-container fluid >
         <router-view />
-    </section>
+      </v-container>
+    </v-content>
 
-    <footer>
-    </footer>  
-  </div>
+    <v-footer color="indigo" app>
+      <span class="white--text">&copy; aumjaud 2018</span>
+    </v-footer>
+
+  </v-app>
 </template>
 
 <script>
-  import NavMenu from './components/NavMenu.vue'
-
   export default {
-    name: 'app',
-    components: {
-      NavMenu
-    }
+    data: () => ({
+      drawer: null
+    })
   }
 </script>
 
 <style lang="scss">
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-
-    header {
-      h1 {
-        font-size: 2em;
-        text-shadow: 2px 5px 5px #aca2a2;
-        margin: 10px 0;
-      }
-    }
-
-    footer {
-      height: 20px;
-    }
-
+  .container {
     button {
       border: none;
       border-radius: 10px;
@@ -81,3 +101,4 @@
     }
   }
 </style>
+
