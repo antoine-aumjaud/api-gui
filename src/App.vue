@@ -1,11 +1,6 @@
 <template>
-    <v-app id="app">
-      <v-navigation-drawer
-        v-model="drawer"
-        fixed
-        app
-      >
-
+  <v-app id="app">
+    <v-navigation-drawer v-model="drawer" fixed app>
       <v-list dense>
         <v-list-tile :to="{path: '/monitoring'}">
           <v-list-tile-action>
