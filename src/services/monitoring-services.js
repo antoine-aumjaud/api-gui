@@ -47,7 +47,7 @@ async function doAction(app, action) {
       content = await secureService.secureFetchJson(app.uid, action.method);
       break;
   }
-  console.info("App '" + app.name + "', action '" + action.name + "' =>", content); 
+  return content; 
 }
 
 export default {

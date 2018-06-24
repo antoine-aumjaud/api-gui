@@ -25,11 +25,11 @@
         chartDataSize: [],
         chartDataWeight: [],
         usersInfo: [
-          {name: 'Antoine', color: '#0B8043', checked: true}, 
-          {name: 'Camille', color: '#d81b60', checked: true},
-          {name: 'Kyllian', color: '#3F51B5', checked: true}, 
-          {name: 'Enola',   color: '#8e24aa', checked: true}, 
-          {name: 'Maelynn', color: '#9e68af', checked: true}
+          {name: 'Antoine', color: '#0B8043'}, 
+          {name: 'Camille', color: '#d81b60'},
+          {name: 'Kyllian', color: '#3F51B5'}, 
+          {name: 'Enola',   color: '#8e24aa'}, 
+          {name: 'Maelynn', color: '#9e68af'}
         ],
       }
     },

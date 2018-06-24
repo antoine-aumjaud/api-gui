@@ -34,7 +34,7 @@ async function renewToken() {
   if(isRenewingToken) return;
   isRenewingToken = true;
   const login = getTokenLogin();
-  console.info("Token will be expire, renew it with user '%s'", login);
+  console.info("Token will expire soon, renew it with user '%s'", login);
   try {
     const json = await secureFetchJson('api-authenticate', 'secure/renewUserSign', {
         method: 'POST', 

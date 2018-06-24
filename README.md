@@ -1,3 +1,5 @@
 # API GUI
 
-Link: canda.aumjaud.fr
+Link: https://canda.aumjaud.fr
+
+(hosted by GitHub)

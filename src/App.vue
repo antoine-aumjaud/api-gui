@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <v-navigation-drawer v-model="drawer" fixed app>
+    <v-navigation-drawer v-model="drawer" clipped app>
       <v-list dense>
         <v-list-tile :to="{path: '/monitoring'}">
           <v-list-tile-action>
@@ -29,9 +29,22 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar color="indigo" dark fixed app>
+    <v-toolbar color="indigo" dark app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Services Aumjaud</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-menu offset-y>
+          <v-icon medium slot="activator" class="mx-aut">person</v-icon>
+          <!-- <v-list>
+            <v-list-tile >
+              <v-list-tile-title>AA</v-list-tile-title>
+              <v-list-tile-title>BA</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+          -->
+        </v-menu>
+      </v-toolbar-items>    
     </v-toolbar>
 
     <v-content>
