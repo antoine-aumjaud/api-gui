@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint" : "vue-cli-service lint",
-    "deploy": "yarn build && git subtree push --prefix dist origin gh-pages"
+    "deploy": "yarn build && ./deploy.sh"
   },
   "dependencies": {
     "chart.js": "^2.7.2",
