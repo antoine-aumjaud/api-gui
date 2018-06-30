@@ -8,7 +8,23 @@ cache:
   yarn: true
 
 script:
-  - yarn deploy
+  - yarn build
+  - export SHA=`git rev-parse --short --verify HEAD`
+  # auto set by travis cli: travis env set CI_AA_TOKEN xxxxxx --private -r antoine-aumjaud/api-gui
+  - echo -e "machine github.com\n  login $CI_AA_TOKEN" > ~/.netrc
+  - rm -rf /tmp/dist 
+  - cp -r dist /tmp 
+  - pushd /tmp/dist
+  - git init
+  - git config user.name "Travis CI"
+  - git config user.email antoine_dev@aumjaud.fr
+  - git add *
+  - "git commit -m \"Deploy to GitHub Pages $SHA\""
+  - git remote add -t gh-pages -m gh-pages origin https://github.com/antoine-aumjaud/api-gui.git
+  - git fetch origin gh-pages
+  - git checkout gh-pages
+  - git reset master --hard
+  - git push --force origin gh-pages
 
 notifications:
   email: 
