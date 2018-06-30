@@ -1,8 +1,10 @@
 <template>
   <div>
     <h2>Monitoring</h2>
+    <v-alert transition="fade-transition" :value="dialogIsVisible" :type="dialogType">{{ dialogMsg }}</v-alert>
+
     <div class="monitoring">
-      <monitoring-app :app="app" :isConnected="isConnected" v-for="app in apps" :key="app.uid" />
+      <monitoring-app v-on:showDialog='showDialog' :app="app" :isConnected="isConnected" v-for="app in apps" :key="app.uid" />
     </div>
   </div>
 </template>
@@ -17,6 +19,9 @@
     name: 'monitoring',
     data() {
       return {
+        dialogIsVisible: false,
+        dialogMsg: '',
+        dialogType: 'success',
         apps: [],
         isConnected: false
       }
@@ -25,9 +30,17 @@
       this.apps = monitoringService.getApps();
       this.isConnected = secureService.isTokenValid();
     },
+    methods: {
+      showDialog(event) {
+        this.dialogIsVisible = true;
+        this.dialogMsg = event.message;
+        this.dialogType = event.messageType;
+        setTimeout(function() { this.dialogIsVisible = false; }.bind(this), 2000);
+      }
+    },
     components: {
       MonitoringApp
-    }
+    },
   }
 </script>
 

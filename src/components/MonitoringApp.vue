@@ -6,8 +6,6 @@
     <div v-if="isConnected" class="actions">
       <button type="button" v-for="action in app.actions" :key="action.method" @click="doAction(app, action)">{{action.name}}</button>
     </div>
-    
-    <v-alert :value="this.dialogMsg != ''" type="success">{{ this.dialogMsg }}</v-alert>
   </div>
 </template>
 
@@ -26,15 +24,15 @@
         required: true
       }
     }, 
-    data () {
-      return {
-        dialogMsg: ''
-      }
-    },      
     methods: {
       async doAction(app, action) {
-        this.dialogMsg = await monitoringService.doAction(app, action);
-        setTimeout(function() { this.dialogMsg = ''; }.bind(this), 2000);
+        let dialogMsg;
+        try {
+          dialogMsg = await monitoringService.doAction(app, action);
+        } catch(e) {
+          dialogMsg = e;
+        }
+        this.$emit('showDialog', {message: app.name + " - " + action.name + ": " + dialogMsg, messageType: 'success'});
       }
     }
   }
