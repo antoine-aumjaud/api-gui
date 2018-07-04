@@ -50,21 +50,19 @@
         }
         
         for(let user of this.usersInfo) {
-          if(user.checked) {
-            if(this.allData[user.name].size) {
-              this.chartDataSize.push( {
-                name: user.name,
-                data: this.allData[user.name].size.map(v => { return { t: new Date(v.date), y: formatSize(v) } }),
-                color: user.color
-              });
-            }
-            if(this.allData[user.name].weight) {
-              this.chartDataWeight.push( {
-                name: user.name,
-                data: this.allData[user.name].weight.map(v => { return { t: new Date(v.date), y: formatWeight(v) } }),
-                color: user.color
-              });
-            }
+          if(this.allData[user.name].size) {
+            this.chartDataSize.push( {
+              name: user.name,
+              data: this.allData[user.name].size.map(v => { return { t: new Date(v.date), y: formatSize(v) } }),
+              color: user.color
+            });
+          }
+          if(this.allData[user.name].weight) {
+            this.chartDataWeight.push( {
+              name: user.name,
+              data: this.allData[user.name].weight.map(v => { return { t: new Date(v.date), y: formatWeight(v) } }),
+              color: user.color
+            });
           }
         } 
         this.loaded = true;
