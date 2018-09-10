@@ -1,7 +1,7 @@
-import secureService from './secure-services.js'
+import secureServices from './secure-services.js'
 
 async function sendMessage(message) {
-  const response = await secureService.secureFetch('api-nabaztag', 'secure/sendMessage', {
+  const response = await secureServices.secureFetch('api-nabaztag', 'secure/sendMessage', {
     method: 'POST', 
     body: { message }
   });

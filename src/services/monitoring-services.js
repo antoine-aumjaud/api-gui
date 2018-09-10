@@ -1,4 +1,4 @@
-import secureService from './secure-services.js'
+import secureServices from './secure-services.js'
 
 function getApps() {
   const apps = [
@@ -24,7 +24,7 @@ function getApps() {
 
   apps.forEach(app => {
     app.status = "unknown";
-    secureService.unsecureFetchJson(app.uid, 'info')
+    secureServices.unsecureFetchJson(app.uid, 'info')
       .then(json => {
         app.status = "ok"
         app.infos = json; 
@@ -41,10 +41,10 @@ async function doAction(app, action) {
   let content;
   switch(action.methodType) {
     case "text":
-      content = await secureService.secureFetchText(app.uid, action.method);
+      content = await secureServices.secureFetchText(app.uid, action.method);
       break;
     case "json":
-      content = await secureService.secureFetchJson(app.uid, action.method);
+      content = await secureServices.secureFetchJson(app.uid, action.method);
       break;
   }
   return content; 

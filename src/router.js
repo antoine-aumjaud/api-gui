@@ -7,6 +7,7 @@ import Family         from './components/Family.vue'
 import FamilyForm     from './components/FamilyForm.vue'
 import FamilyHistory  from './components/FamilyHistory.vue'
 import HomeAutomation from './components/HomeAutomation.vue'
+import SMS            from './components/SMS.vue'
 
 Vue.use(Router)
 
@@ -42,6 +43,11 @@ export default new Router({
       path: '/family-form',
       name: 'family-form',
       component: FamilyForm
+    },
+    {
+      path: '/sms',
+      name: 'sms',
+      component: SMS
     },
   ]
 })
