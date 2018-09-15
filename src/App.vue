@@ -34,6 +34,14 @@
             <v-list-tile-title>SMS</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile :to="{path: '/kyllian'}">
+          <v-list-tile-action>
+            <v-icon>person</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Kyllian</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
 
@@ -43,8 +51,9 @@
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-menu offset-y>
+          <!-- 
           <v-icon medium slot="activator" class="mx-aut">person</v-icon>
-          <!-- <v-list>
+          <v-list>
             <v-list-tile >
               <v-list-tile-title>AA</v-list-tile-title>
               <v-list-tile-title>BA</v-list-tile-title>

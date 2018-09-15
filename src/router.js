@@ -8,6 +8,7 @@ import FamilyForm     from './components/FamilyForm.vue'
 import FamilyHistory  from './components/FamilyHistory.vue'
 import HomeAutomation from './components/HomeAutomation.vue'
 import SMS            from './components/SMS.vue'
+import Kyllian        from './components/Kyllian.vue'
 
 Vue.use(Router)
 
@@ -48,6 +49,11 @@ export default new Router({
       path: '/sms',
       name: 'sms',
       component: SMS
+    },
+    {
+      path: '/kyllian',
+      name: 'kyllian',
+      component: Kyllian
     },
   ]
 })
