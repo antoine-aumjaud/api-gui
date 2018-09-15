@@ -21,7 +21,8 @@
 </template>
 
 <script>
-  import smsService from '../services/sms-services'
+  import secureServices from '../services/secure-services'
+  import smsServices from '../services/sms-services'
 
   export default {
     name: 'sms',
@@ -32,7 +33,11 @@
         error: ''
       }
     },
-  
+
+    created () {
+      secureServices.secureAccess();
+    },
+    
     methods: {
       async send() {
         //Checks
@@ -48,7 +53,7 @@
         }
         else {
           //Call service
-          const success = await smsService.sendMessage(this.name, this.message);
+          const success = await smsServices.sendMessage(this.name, this.message);
           if(success) { this.error = ''; }
           else { this.error = "L'envoie a échouée"; }
         }

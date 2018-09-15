@@ -4,7 +4,7 @@ async function sendMessage(name, message) {
   const id    = await secureServices.secureFetchText('api-secrets', 'secure/properties/sms.' + name + '.id',    { method: 'GET' });
   const token = await secureServices.secureFetchText('api-secrets', 'secure/properties/sms.' + name + '.token', { method: 'GET' });
   const loggedUser = secureServices.getTokenLogin();
-  //to avoid CORS errors, open API in new Tab
+  //to avoid CORS errors => open API in new Tab (could be another micro service)
   window.open('https://smsapi.free-mobile.fr/sendmsg'
     + '?user=' + id 
     + '&pass=' + token 
