@@ -11,22 +11,12 @@
     </v-alert>
 
     <h3>Prochains départs</h3>
-    <form>
-    <div v-for="(direction, i) in nextTrains.directions" v-bind:key="direction">
-      <input type="checkbox" :id="'dir_'+i" :value="direction" checked>
-      <label :for="'dir_'+i">{{direction}}</label>
-    </div> 
-    </form>
-
-    <table>
+    <table v-for="direction in nextTrains.directions" v-bind:key="direction">
       <tr>
-        <th>Ligne</th>
-        <th>Direction</th>
-        <th>Horaire</th>
+        <th colspan="2">{{direction}}</th>
       </tr>
-      <tr v-for="departure in nextTrains.nextDepatures" v-bind:key="departure.date">
+      <tr v-if="departure.direction == direction" v-for="departure in nextTrains.nextDepatures" v-bind:key="departure.date">
         <td><img :src="'images/trains/RER_' + departure.code + '.png'"></td>
-        <td class="direction">{{departure.direction}}</td>
         <td>{{displayDate(departure.date)}}</td>
       </tr>
     </table>
@@ -61,22 +51,23 @@
 
 <style scoped lang="scss">
 table {
-    margin-top: 1em;
-    border-collapse: collapse;
-    border: 1px solid black;
+  margin-bottom: 1em;
+  margin-left: 1em;
+  width: 15em;
+  border-collapse: collapse;
+  border: 1px solid black;
+  float: left;
 }
 th {
   background: rgb(126, 55, 117);
   color: white;
 }
 th, td {
-    border: 1px solid black;
-    text-align: center;
-    padding: 8px;
+  border: 1px solid black;
+  text-align: center;
+  padding: 8px;
 }
-td.direction {
-  text-align: left;
-}
+
 h3 {
   padding-top: 1.5em;
   padding-bottom: .8em;
