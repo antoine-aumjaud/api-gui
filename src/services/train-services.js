@@ -32,7 +32,7 @@ async function getNextTrains(uic) {
   const directions = new Set();
   const nextDepatures = [];
   json.departures.forEach(departure => {
-    directions.add( departure.display_informations.direction );
+    directions.add(departure.display_informations.direction);
     nextDepatures.push({
       code: departure.display_informations.code, 
       direction: departure.display_informations.direction,
