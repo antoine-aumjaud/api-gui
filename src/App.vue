@@ -10,6 +10,14 @@
             <v-list-tile-title>Monitoring</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile :to="{path: '/train'}">
+          <v-list-tile-action>
+            <v-icon>train</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Train</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
         <v-list-tile :to="{path: '/home-automation'}">
           <v-list-tile-action>
             <v-icon>home</v-icon>
