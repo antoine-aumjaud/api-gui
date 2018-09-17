@@ -43,7 +43,7 @@
     methods: {
       displayDate(timetamp) {
         const date = new Date(timetamp);
-        return date.getUTCHours() + ":" + date.getUTCMinutes();
+        return date.getHours() + ":" + date.getMinutes();
       }
     }
   }

@@ -27,6 +27,19 @@ async function getNextTrains(uic) {
         ['Authorization', 'Basic ' + btoa(sncfToken)]
     ]) 
   });
+
+  switch (response.status) { 
+    case 401: throw "Authentication failed or missing (invalid API key?)"; 
+    case 403: 
+      if (response.headers['Retry-After']) throw "API call quota exceeded (retry after $retry_after s)";
+      else throw "Forbidden (invalid station or other error)";
+    case 404: throw "Invalid path supplied to API call";
+    case 406: throw "Unsupported version";
+    case 500: throw "API is broken";
+    case 503: throw "API is overloaded";
+    default: break;
+  }
+
   const json = await response.json();
   const disruptions = json.disruptions;
   const directions = new Set();
@@ -44,13 +57,13 @@ async function getNextTrains(uic) {
 
 //  20180916T215100  
 function formatDate(dateToFormat) {
-  return dateToFormat.getUTCFullYear() 
-    + pad( dateToFormat.getUTCMonth() + 1 ) 
-    + pad( dateToFormat.getUTCDate() ) 
+  return dateToFormat.getFullYear() 
+    + pad( dateToFormat.getMonth() + 1 ) 
+    + pad( dateToFormat.getDate() ) 
     + 'T' 
-    + pad( dateToFormat.getUTCHours() ) 
-    + pad( dateToFormat.getUTCMinutes() ) 
-    + pad( dateToFormat.getUTCSeconds() );
+    + pad( dateToFormat.getHours() ) 
+    + pad( dateToFormat.getMinutes() ) 
+    + pad( dateToFormat.getSeconds() );
 }
 function parseDate(dateStr) {
   const year  = dateStr.substr(0,4);
@@ -59,7 +72,7 @@ function parseDate(dateStr) {
   const hour  = dateStr.substr(9,2);
   const min   = dateStr.substr(11,2);
   const sec   = dateStr.substr(12,2);
-  return new Date(year, month, day, hour, min, sec).getTime();
+  return new Date(year, month-1, day, hour, min, sec).getTime();
 }
 
 function pad(number) {
