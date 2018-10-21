@@ -54,7 +54,7 @@
         else {
           //Call service
           const success = await smsServices.sendMessage(this.name, this.message);
-          if(success) { this.error = ''; }
+          if(success) { this.error = ''; this.message = ''; }
           else { this.error = "L'envoie a échouée"; }
         }
       }
