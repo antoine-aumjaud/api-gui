@@ -9,6 +9,14 @@
       La sécurité est ACTIVE. <br/>
       <button type="button" class="deactivate" @click="deactivate()">DESACTIVER</button>
     </div>
+    <button type="button" @click="onCameraClickView('salon')">Camera salon</button>
+    <button type="button" @click="onCameraClickView('bureau')">Camera bureau</button>
+    <v-dialog v-model="viewCamera" >
+      <v-card>
+        <v-card-text><img :src="srcCamera"/></v-card-text>
+        <v-card-actions><v-btn @click="viewCamera=false">Fermer</v-btn></v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -20,7 +28,9 @@
     name: 'home-security',
     data() {
       return {
-        isActivated: false
+        isActivated: false,
+        viewCamera: false,
+        srcCamera: ''
       }
     },
     async created() {
@@ -34,6 +44,30 @@
       async deactivate() {
         let id = secureService.getTokenLogin();
         this.isActivated = !await homeSecurityService.deactivate(id);
+      },
+      onCameraClickView(place) {
+        this.viewCamera = true;
+        this.refreshImageCamera(place);
+      },
+      async refreshImageCamera(place) {
+        if(!this.viewCamera) return;
+
+        let path; 
+        switch(place) {
+          case 'salon':  path = "Salon"; break;
+          case 'bureau': path = "Burea"; break;
+        }
+        try {
+          const response = await secureService.secureFetch('api-home-security', '/secure/camera/camera_' + path + '.jpg');
+          if(response.ok) {
+            this.srcCamera = URL.createObjectURL(await response.blob());
+            setTimeout(() => this.refreshImageCamera(place), 200);
+          } else {
+            console.error("Can't read image from network", response);
+          }
+        } catch(e) {
+          console.error('Error while fetching', e);
+        }
       }
     }
   }
