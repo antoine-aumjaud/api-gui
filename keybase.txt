@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/antoine_aumjaud
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://canda.aumjaud.fr
+  * I am antoine_aumjaud (https://keybase.io/antoine_aumjaud) on keybase.
+  * I have a public key with fingerprint 19FD B2D6 CD5D 880E C0CA  F60D 73A3 2C55 7853 2796
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0101ec0a3e2b04f9daf68f4dd0511aa16c7c1a7ae7bffcef3b064f2e4069c95e20770a",
+      "fingerprint": "19fdb2d6cd5d880ec0caf60d73a32c5578532796",
+      "host": "keybase.io",
+      "key_id": "73a32c5578532796",
+      "kid": "0101ec0a3e2b04f9daf68f4dd0511aa16c7c1a7ae7bffcef3b064f2e4069c95e20770a",
+      "uid": "4ee6b868c76ded88a8ddfad1aeb86a19",
+      "username": "antoine_aumjaud"
+    },
+    "service": {
+      "hostname": "canda.aumjaud.fr",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1545597893,
+  "expire_in": 157680000,
+  "prev": "ed4bc24bd00c930af1ebfccb9d433151f539b0a2bf3730689aefd9fe8a19582c",
+  "seqno": 10,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.80
+Comment: https://keybase.io/crypto
+
+yMIqAnicrZJbSBRRGMdXyyLpBoFdaWEKojI5Z+6zlSZdoEIDTSxIljPnolPrzDYz
+a8m23SD2IfAhCHqwggKzkl4qqR6qDVNLcaEHtXsS0VWItocKu5wRe+ux83I43/f/
+ft//+zhdMyaFCvOKwocFfGhtOq8vcz4R2hXO3U8KpkOahUhS2EPHLxoj1POjeywi
+RAQAAaQYIImKJpCZQRBTdSYTAhQIEYIq1jBEGqKayRimTDKBKjORykA1sKFQEWga
+QEKxwCy7nrpx17J9joUGI6ZIVEwUouuAd8AcDIgmIUnEiqLpiiRqhsoLGxwvqODm
+TOTREsvhMf6Ijtv7h/4/+06M42RKVVNXdayphHLHSCeEIQIR5VEEjUDoUddGjZSr
+ke07lk2jKNG4GyWIkCoWeLLJwjTYbzDQhBAjm6CSCVkJczkm7jq+g50Yzzb4ftyL
+BNV+czyQ76NmdAIUNS2b8JXyiibqepZjCxHIldi3AjJUZEUxNN2QigW6P265NGoF
+CkVTdcBP0Ic2cSQlsolF2SQAYEMCiEFqMoxNg8iSBBXIFMkwARJNJmkSUHUDUUYM
+RnU+tKKLWAhG22s7nM2hPqrnTM+qt5GfcKmQund31+RQXmFoSkF+8NdChdNm//2B
+l3qm/lzYf27xwO/H4dpcZ+nJLWBBw8dsX/fnt98HzZhdPfPogbH+nYt+lo7M8p6L
+5XN/5WdbRyvzW98le48C5VxHc0VN9kLVtB/Lh2KDl+2yTcdvHxkbq3v48sSW8xXb
+avpP9xQ8O7WiHcxPb80NP5yy6lCqbSQ3WllVlYk9XtKWvDLc2VJ+faDW640VrfkQ
+v7oedm1oiT1qW1Z08knB9FeTL6RPV2+9MmdeGXx9M9MOwmezt1pfZ7q+zPh0bXtk
+h/e14sbF5+nwUIcyfPAMaYcbe1fmVNltU0eHNq9beOJB3YEa7dve6qV1cOnc99NX
+rRuc86a7IDqy7WlFqvFFe+rOseTqWmHfH2/TS7M=
+=DGsW
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/antoine_aumjaud
+
+==================================================================
