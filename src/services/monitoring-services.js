@@ -8,7 +8,6 @@ function getApps() {
     {"uid":"api-family",           "name": "API Family",           "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}, {"name": "Reset Cache", "methodType": "text", "method": "secure/resetCache"}]},
     {"uid":"api-home-security",    "name": "API Home Security",    "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
     {"uid":"api-nabaztag",         "name": "API Nabaztag",         "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
-    {"uid":"api-secrets",          "name": "API Secrets",          "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
     {"uid":"api-shopping-list",    "name": "API Shopping List",    "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}, {"name": "Reset Cache", "methodType": "text", "method": "secure/resetCache"}]},
     //{"uid":"api-error",            "name": "API Error",            "actions": []},
     /*    
