@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 16
@@ -22,7 +22,7 @@ jobs:
     - run: npm ci
     - run: npm run build
 
-    - name: Pushes to another repository
+    - name: Pushes to gh-pages
       uses: cpina/github-action-push-to-another-repository@main
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
