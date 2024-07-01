@@ -5,6 +5,7 @@
       <fieldset>
         <label>Destinataire</label> 
         <select v-model="name">
+          <option value="maelynn">Maelynn</option>
           <option value="enola">Enola</option>
           <option value="kyllian">Kyllian</option>
           <option value="camille">Camille</option>
