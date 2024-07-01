@@ -71,7 +71,7 @@
     </v-content>
 
     <v-footer color="indigo" app>
-      <span class="white--text">&copy; aumjaud 2018</span>
+      <span class="white--text">&copy; aumjaud 2018-2024</span>
     </v-footer>
 
   </v-app>
