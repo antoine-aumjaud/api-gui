@@ -8,6 +8,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
     steps:
     - name: Checkout sources
       uses: actions/checkout@v3
@@ -20,13 +24,8 @@ jobs:
     - run: npm ci
     - run: npm run build
 
-    - name: Pushes to gh-pages
-      uses: cpina/github-action-push-to-another-repository@main
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+    - name: Deploy to GH Pages 🚀
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        source-directory: 'dist'
-        destination-github-username: 'antoine-aumjaud'
-        destination-repository-name: 'api-gui'
-        user-email: antoine_dev@aumjaud.fr
-        target-branch: gh-pages
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: dist
