@@ -7,8 +7,6 @@ function getApps() {
     {"uid":"api-synology-chatbot", "name": "API Synology Chatbot", "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
     {"uid":"api-family",           "name": "API Family",           "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}, {"name": "Reset Cache", "methodType": "text", "method": "secure/resetCache"}]},
     {"uid":"api-home-security",    "name": "API Home Security",    "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
-    {"uid":"api-nabaztag",         "name": "API Nabaztag",         "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
-    {"uid":"api-shopping-list",    "name": "API Shopping List",    "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}, {"name": "Reset Cache", "methodType": "text", "method": "secure/resetCache"}]},
     //{"uid":"api-error",            "name": "API Error",            "actions": []},
     /*    
     {"uid":"api-traefik",          "name": "API Traefik",            "type": "url"   , "url": "https://api-traefik.aumjaud.fr/dashboard/", "returnStatus": 401},
@@ -18,6 +16,8 @@ function getApps() {
     {"uid":"aumjaud/photo",        "name": "DS Photos",              "type": "url"   , "url": "https://aumjaud.fr/photo/"},
     {"uid":"surveillance.aumjaud", "name": "DS Surveillance",        "type": "url"   , "url": "https://surveillance.aumjaud.fr"},
     {"uid":"security-api.aumjaud", "name": "API Home Security HTTP", "type": "url"   , "url": "http://security-api.aumjaud.fr:81", "returnStatus": 401},
+    {"uid":"api-shopping-list",    "name": "API Shopping List",    "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}, {"name": "Reset Cache", "methodType": "text", "method": "secure/resetCache"}]},
+    {"uid":"api-nabaztag",         "name": "API Nabaztag",         "actions": [{"name": "Reload Config", "methodType": "text", "method": "secure/reloadConfig"}]},
     */
   ];
 

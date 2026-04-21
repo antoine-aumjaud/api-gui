@@ -2,14 +2,12 @@
   <div>
     <h2>Domotique</h2>
     <div class="bloc"><home-security /></div>
-    <div class="bloc"><home-nabaztag /></div>
   </div>
 </template>
 
 <script>
   import secureServices from '../services/secure-services'
   import HomeSecurity from './HomeSecurity.vue'
-  import HomeNabaztag from './HomeNabaztag.vue'
 
   export default {
     name: 'home-automation',
@@ -19,7 +17,7 @@
     },
     
     components: {
-      HomeSecurity, HomeNabaztag
+      HomeSecurity
     }
   }
 </script>
