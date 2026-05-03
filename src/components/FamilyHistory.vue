@@ -52,17 +52,18 @@
         }
         
         for(let user of this.usersInfo) {
-          if(this.allData[user.name].size) {
+          const userData = this.allData[user.name] || {};
+          if(userData.size) {
             this.chartDataSize.push( {
               name: user.name,
-              data: this.allData[user.name].size.map(v => { return { t: new Date(v.date), y: formatSize(v) } }),
+              data: userData.size.map(v => { return { x: new Date(v.date), y: formatSize(v) } }),
               color: user.color
             });
           }
-          if(this.allData[user.name].weight) {
+          if(userData.weight) {
             this.chartDataWeight.push( {
               name: user.name,
-              data: this.allData[user.name].weight.map(v => { return { t: new Date(v.date), y: formatWeight(v) } }),
+              data: userData.weight.map(v => { return { x: new Date(v.date), y: formatWeight(v) } }),
               color: user.color
             });
           }
