@@ -27,8 +27,10 @@
       }
     },
     created() {
-      this.apps = monitoringService.getApps();
+      this.apps = monitoringService.getAppsConfig();
       this.isConnected = secureService.isTokenValid();
+      // check status through reactive proxies so Vue detects changes
+      this.apps.forEach(app => monitoringService.checkAppStatus(app));
     },
     methods: {
       showDialog(event) {

@@ -2,7 +2,7 @@
   <div class="app" :class="app.status">
     <div class="title">{{ app.name }}</div>
     <div class="infos" v-if="app.infos">{{app.infos.version}} - {{app.infos.buildDate}}</div>
-    <div class="error">{{ app.error }}</div>
+    <div class="error-text">{{ app.error }}</div>
     <div v-if="isConnected" class="actions">
       <button type="button" v-for="action in app.actions" :key="action.method" @click="doAction(app, action)">{{action.name}}</button>
     </div>
@@ -39,16 +39,6 @@
 </script>
 
 <style scoped lang="scss">
-  .error {
-    background-color: darkred;
-  }
-  .ok {
-    background-color: darkgreen;
-  }
-  .unknown {
-    background-color: rgb(168, 198, 255);
-  }
-
   .app {
     flex-grow:1;
     color: azure;
@@ -56,6 +46,17 @@
     border-radius: 10px;
     margin: 10px;
     box-shadow: 0 8px 13px 0 #aeadad;
+    background-color: #607d8b; /* default/unknown: grey-blue */
+
+    &.ok {
+      background-color: darkgreen;
+    }
+    &.error {
+      background-color: darkred;
+    }
+    &.unknown {
+      background-color: #607d8b;
+    }
 
     .title {
       font-size: 1.1em;
@@ -63,9 +64,9 @@
     .infos {
       font-size: 0.9em;
     }
-    .error {
+    .error-text {
       font-size: 0.9em;
-      color: red;
+      color: #ffcccc;
     }
   }
   #app button {
