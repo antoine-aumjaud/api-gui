@@ -1,17 +1,62 @@
-let secureToken;
+const TOKEN_STORAGE_KEY = 'secureToken';
+
+function loadStoredToken() {
+  try {
+    return window.localStorage.getItem(TOKEN_STORAGE_KEY);
+  }
+  catch (e) {
+    console.warn('Cannot read token from localStorage', e);
+    return null;
+  }
+}
+
+function storeToken(token) {
+  try {
+    if (token) {
+      window.localStorage.setItem(TOKEN_STORAGE_KEY, token);
+    }
+    else {
+      window.localStorage.removeItem(TOKEN_STORAGE_KEY);
+    }
+  }
+  catch (e) {
+    console.warn('Cannot store token in localStorage', e);
+  }
+}
+
+let secureToken = loadStoredToken();
 let isRenewingToken = false;
 
 function getTokenPayload() {
-  return JSON.parse(atob(secureToken.split('.')[1]));
+  if (!secureToken) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(atob(secureToken.split('.')[1]));
+  }
+  catch (e) {
+    console.warn('Invalid token payload', e);
+    storeToken(null);
+    secureToken = null;
+    return null;
+  }
 }
 function getTokenLogin() {
-  return secureToken != null ? getTokenPayload().login : null;
+  const payload = getTokenPayload();
+  return payload != null ? payload.login : null;
 }
 function isTokenValid() {
-  return secureToken != null && getTokenPayload().exp * 1000 /*in ms*/ - 5*1000 /*margin 5s*/ > Date.now();
+  const payload = getTokenPayload();
+  return payload != null
+    && typeof payload.exp === 'number'
+    && payload.exp * 1000 /*in ms*/ - 5*1000 /*margin 5s*/ > Date.now();
 }
 function isTokenShouldBeRenew() {
-  return isTokenValid() && getTokenPayload().exp * 1000 /*in ms*/ - 60*1000 /*margin 60s*/ < Date.now();
+  const payload = getTokenPayload();
+  return isTokenValid()
+    && payload != null
+    && payload.exp * 1000 /*in ms*/ - 60*1000 /*margin 60s*/ < Date.now();
 }
 
 async function auth(login, password) {
@@ -22,11 +67,13 @@ async function auth(login, password) {
         body: "login=" + encodeURIComponent(login) + "&password=" + encodeURIComponent(password)
     });
     secureToken = json.token;
+    storeToken(secureToken);
     return true;
   } 
   catch(e) {
     console.error(e);
     secureToken = null;
+    storeToken(null);
     return false;
   }
 }
@@ -41,6 +88,7 @@ async function renewToken() {
         body: "login=" + encodeURIComponent(login)
     });
     secureToken = json.token;
+    storeToken(secureToken);
   } 
   catch(e) {
     console.error(e);
@@ -53,6 +101,8 @@ async function renewToken() {
 function secureAccess() {
   //Redirect if token is not valid
   if(!isTokenValid()) {
+    storeToken(null);
+    secureToken = null;
     const redirect = encodeURIComponent(window.location.pathname + window.location.search);
     window.location = "/sign-in?redirect=" + redirect;
     return;
