@@ -1,59 +1,72 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+import secureServices from './services/secure-services'
 
-import Monitoring     from './components/Monitoring.vue'
-import SignIn         from './components/SignIn.vue'
-import Family         from './components/Family.vue'
-import FamilyForm     from './components/FamilyForm.vue'
-import FamilyHistory  from './components/FamilyHistory.vue'
-import HomeAutomation from './components/HomeAutomation.vue'
-import SMS            from './components/SMS.vue'
-import Train          from './components/Train.vue'
+const routes = [
+  {
+    path: '/',
+    redirect: '/monitoring',
+  },
+  {
+    path: '/monitoring',
+    name: 'monitoring',
+    component: () => import('./components/Monitoring.vue'),
+  },
+  {
+    path: '/sign-in',
+    name: 'signin',
+    meta: { public: true },
+    component: () => import('./components/SignIn.vue'),
+  },
+  {
+    path: '/home-automation',
+    name: 'home-automation',
+    component: () => import('./components/HomeAutomation.vue'),
+  },
+  {
+    path: '/family',
+    name: 'family',
+    component: () => import('./components/Family.vue'),
+  },
+  {
+    path: '/family-history',
+    name: 'family-history',
+    component: () => import('./components/FamilyHistory.vue'),
+  },
+  {
+    path: '/family-form',
+    name: 'family-form',
+    component: () => import('./components/FamilyForm.vue'),
+  },
+  {
+    path: '/sms',
+    name: 'sms',
+    component: () => import('./components/SMS.vue'),
+  },
+  {
+    path: '/train',
+    name: 'train',
+    component: () => import('./components/Train.vue'),
+  },
+]
 
-Vue.use(Router)
-
-export default new Router({
-  routes: [
-    {
-      path: '/monitoring',
-      name: 'monitoring',
-      component: Monitoring,
-      alias: '/'
-    },
-    {
-      path: '/sign-in',
-      name: 'signin',
-      component: SignIn
-    },
-    {
-      path: '/home-automation',
-      name: 'home-automation',
-      component: HomeAutomation
-    },
-    {
-      path: '/family',
-      name: 'family',
-      component: Family
-    },
-    {
-      path: '/family-history',
-      name: 'family-history',
-      component: FamilyHistory
-    },
-    {
-      path: '/family-form',
-      name: 'family-form',
-      component: FamilyForm
-    },
-    {
-      path: '/sms',
-      name: 'sms',
-      component: SMS
-    },
-    {
-      path: '/train',
-      name: 'train',
-      component: Train
-    },
-  ]
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
 })
+
+router.beforeEach((to) => {
+  if (to.meta.public) {
+    return true
+  }
+
+  if (secureServices.isTokenValid()) {
+    return true
+  }
+
+  return {
+    name: 'signin',
+    query: { redirect: to.fullPath },
+  }
+})
+
+export default router

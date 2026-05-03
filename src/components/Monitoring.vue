@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Monitoring</h2>
-    <v-alert transition="fade-transition" :value="dialogIsVisible" :type="dialogType">{{ dialogMsg }}</v-alert>
+    <v-alert v-if="dialogIsVisible" :type="dialogType" variant="tonal" class="mb-4">{{ dialogMsg }}</v-alert>
 
     <div class="monitoring">
       <monitoring-app v-on:showDialog='showDialog' :app="app" :isConnected="isConnected" v-for="app in apps" :key="app.uid" />

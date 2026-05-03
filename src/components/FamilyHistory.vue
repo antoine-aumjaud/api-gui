@@ -37,6 +37,8 @@
     methods: {
       render() {
         this.loaded = false;
+        this.chartDataSize = [];
+        this.chartDataWeight = [];
         function formatSize(s) {
           if(!s.m)  s.m  = 0;
           if(!s.cm) s.cm = 0;

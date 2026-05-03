@@ -52,7 +52,11 @@ async function renewToken() {
 
 function secureAccess() {
   //Redirect if token is not valid
-  if(!isTokenValid()) window.location = "/#/sign-in";
+  if(!isTokenValid()) {
+    const redirect = encodeURIComponent(window.location.pathname + window.location.search);
+    window.location = "/sign-in?redirect=" + redirect;
+    return;
+  }
 
   //Renew token if it could be renewed
   if(isTokenShouldBeRenew()) renewToken();

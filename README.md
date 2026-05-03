@@ -1,5 +1,10 @@
 # API GUI
 
+## Prerequisites
+
+- Node.js 20.x to 24.x
+- npm 10.x to 11.x
+
 Build and push master to gh-pages branch:
 
 [![Node.js CI](https://github.com/antoine-aumjaud/api-gui/actions/workflows/build_and_push.yml/badge.svg?branch=master)](https://github.com/antoine-aumjaud/api-gui/actions/workflows/build_and_push.yml)

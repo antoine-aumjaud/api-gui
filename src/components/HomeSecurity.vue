@@ -11,10 +11,13 @@
     </div>
     <button type="button" @click="onCameraClickView('salon')">Camera salon</button>
     <button type="button" @click="onCameraClickView('bureau')">Camera bureau</button>
-    <v-dialog v-model="viewCamera" >
+    <v-dialog v-model="viewCamera" max-width="960">
       <v-card>
-        <v-card-text><img :src="srcCamera"/></v-card-text>
-        <v-card-actions><v-btn @click="viewCamera=false">Fermer</v-btn></v-card-actions>
+        <v-card-text><img :src="srcCamera" alt="Camera"/></v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" @click="viewCamera = false">Fermer</v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>

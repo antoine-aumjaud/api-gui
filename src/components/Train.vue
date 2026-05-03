@@ -6,19 +6,23 @@
     Gare la plus proche : 
     <span class="town">{{ nearestStation.town }}</span>
     
-    <v-alert :value="true" type="error" v-for="disruption in nextTrains.disruptions" v-bind:key="disruption">
+    <v-alert v-for="disruption in nextTrains.disruptions" :key="disruption" type="error" variant="tonal" class="mb-2">
       {{disruption}}
     </v-alert>
 
     <h3>Prochains départs</h3>
-    <table v-for="direction in nextTrains.directions" v-bind:key="direction">
-      <tr>
-        <th colspan="2">{{direction}}</th>
-      </tr>
-      <tr v-if="departure.direction == direction" v-for="departure in nextTrains.nextDepatures" v-bind:key="departure.date">
-        <td><img :src="'images/trains/RER_' + departure.code + '.png'"></td>
-        <td>{{displayDate(departure.date)}}</td>
-      </tr>
+    <table v-for="direction in nextTrains.directions" :key="direction">
+      <thead>
+        <tr>
+          <th colspan="2">{{direction}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="departure in departuresByDirection[direction] || []" :key="departure.date + '-' + departure.direction">
+          <td><img :src="'images/trains/RER_' + departure.code + '.png'"></td>
+          <td>{{displayDate(departure.date)}}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
@@ -35,6 +39,18 @@
       }
     },
 
+    computed: {
+      departuresByDirection() {
+        return this.nextTrains.nextDepatures.reduce((groups, departure) => {
+          if (!groups[departure.direction]) {
+            groups[departure.direction] = [];
+          }
+          groups[departure.direction].push(departure);
+          return groups;
+        }, {});
+      }
+    },
+
     async created () {
       this.nearestStation = await trainServices.getNearestStation();
       this.nextTrains = await trainServices.getNextTrains(this.nearestStation.uic);
@@ -43,7 +59,7 @@
     methods: {
       displayDate(timetamp) {
         const date = new Date(timetamp);
-        return date.getHours() + ":" + date.getMinutes();
+        return String(date.getHours()).padStart(2, '0') + ":" + String(date.getMinutes()).padStart(2, '0');
       }
     }
   }

@@ -1,57 +1,84 @@
 
+<template>
+  <div class="chart-wrapper">
+    <LineChart :data="chartConfig" :options="chartOptions" />
+  </div>
+</template>
+
 <script>
-  import { Line } from 'vue-chartjs'
+  import {
+    Chart as ChartJS,
+    Legend,
+    LineElement,
+    LinearScale,
+    PointElement,
+    TimeScale,
+    Title,
+    Tooltip,
+  } from 'chart.js'
+  import 'chartjs-adapter-date-fns'
+  import { Line as LineChart } from 'vue-chartjs'
+
+  ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, PointElement, TimeScale)
 
   export default {
     name: 'family-history-chart',
-    extends: Line,
-
+    components: {
+      LineChart,
+    },
     props: {
       chartData: {
         type: Array,
-        required: true
-      }
+        required: true,
+      },
     },
     computed: {
-      datasets: function () {
-        return this.chartData.map(ds => {
-          return {
-              data: ds.data,
-              label: ds.name,
-              borderColor: ds.color,
-              pointBorderColor: ds.color,
-              pointBackgroundColor: 'white',
-              borderWidth: 2,
-              backgroundColor: 'transparent',
-            }
-        });
-      }
-    },
-
-    mounted() {
-      this.renderChart( { datasets: this.datasets }, {
-        scales: {
-          yAxes: [{
-            gridLines: { display: true }
-          }],
-          xAxes: [{
-            type: 'time',
-            gridLines: { display: false },
-            time: { 
-              unit: 'month',
-              displayFormats: {
-                quarter: 'MMM YYYY'
-              } 
-            }
-          }]
-        },
-        legend: { display: true },
-        responsive: true,
-        maintainAspectRatio: false
-      })
+      chartConfig() {
+        return {
+          datasets: this.chartData.map(ds => ({
+            data: ds.data,
+            label: ds.name,
+            borderColor: ds.color,
+            pointBorderColor: ds.color,
+            pointBackgroundColor: 'white',
+            borderWidth: 2,
+            backgroundColor: 'transparent',
+            tension: 0.25,
+            spanGaps: true,
+          })),
+        };
+      },
+      chartOptions() {
+        return {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: true },
+          },
+          scales: {
+            y: {
+              grid: { display: true },
+            },
+            x: {
+              type: 'time',
+              grid: { display: false },
+              time: {
+                unit: 'month',
+                displayFormats: {
+                  month: 'MMM yyyy',
+                },
+              },
+            },
+          },
+        };
+      },
     },
   }
 </script>
 
 <style scoped>
+  .chart-wrapper {
+    min-height: 320px;
+    margin-bottom: 2rem;
+  }
 </style>

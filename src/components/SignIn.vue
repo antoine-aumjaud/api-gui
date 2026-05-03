@@ -47,7 +47,13 @@
           //Call service
           const success = await secureServices.auth(this.login, this.password);
           
-          if(success) { this.$router.go(-1); /*this.$router.push('/')*/ /*this.error = ''*/ }
+          if(success) {
+            const redirectPath = this.$route.query.redirect;
+            const target = typeof redirectPath === 'string' && redirectPath.length > 0
+              ? redirectPath
+              : '/';
+            this.$router.push(target);
+          }
           else { this.error = 'Echec d\'authentification'; }
         }
       }

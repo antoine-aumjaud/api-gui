@@ -2,37 +2,41 @@
   <div>
     <h2>Famille</h2>
     <div>
-      <router-link to="/family-form"    tag="button">Nouvelle entrée</router-link>
-      <router-link to="/family-history" tag="button">Historique</router-link>
+      <button type="button" @click="$router.push('/family-form')">Nouvelle entrée</button>
+      <button type="button" @click="$router.push('/family-history')">Historique</button>
   
       <table>
-        <tr>
-          <th>Nom</th>
-          <th>Taille</th>
-          <th>Poids</th>
-          <th>Pointure</th>
-        </tr>
-        <tr v-for="member in ['Antoine', 'Camille', 'Kyllian', 'Enola', 'Maelynn'] /*Object.keys(lastData)*/" :key="member" v-if="lastData[member]">
-          <td><span class="value">{{ member }}</span></td>
-          <td>
-            <div v-if="lastData[member]['size']">
-              <span class="value">{{lastData[member].size.m}}.{{lastData[member].size.cm}}m </span>
-              <span class="date">le {{convertDate(lastData[member].size.date)}}</span>
-            </div>
-          </td>
-          <td>
-            <div v-if="lastData[member]['weight']">
-              <span class="value">{{lastData[member]['weight'].kg}}.{{lastData[member]['weight'].g}}kg </span>
-              <span class="date">le {{convertDate(lastData[member]['weight'].date)}}</span>
-            </div>
-          </td> 
-          <td>
-            <div v-if="lastData[member]['shoes-size']">
-              <span class="value">{{lastData[member]['shoes-size'].number}} </span>
-              <span class="date">le {{convertDate(lastData[member]['shoes-size'].date)}}</span>
-            </div>
-          </td> 
-        </tr>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Taille</th>
+            <th>Poids</th>
+            <th>Pointure</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="member in members" :key="member">
+            <td><span class="value">{{ member }}</span></td>
+            <td>
+              <div v-if="lastData[member]['size']">
+                <span class="value">{{lastData[member].size.m}}.{{lastData[member].size.cm}}m </span>
+                <span class="date">le {{convertDate(lastData[member].size.date)}}</span>
+              </div>
+            </td>
+            <td>
+              <div v-if="lastData[member]['weight']">
+                <span class="value">{{lastData[member]['weight'].kg}}.{{lastData[member]['weight'].g}}kg </span>
+                <span class="date">le {{convertDate(lastData[member]['weight'].date)}}</span>
+              </div>
+            </td>
+            <td>
+              <div v-if="lastData[member]['shoes-size']">
+                <span class="value">{{lastData[member]['shoes-size'].number}} </span>
+                <span class="date">le {{convertDate(lastData[member]['shoes-size'].date)}}</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
 
     </div>
@@ -47,6 +51,12 @@
     data() {
       return {
         lastData: []
+      }
+    },
+
+    computed: {
+      members() {
+        return ['Antoine', 'Camille', 'Kyllian', 'Enola', 'Maelynn'].filter(member => this.lastData[member]);
       }
     },
     
@@ -89,7 +99,7 @@ td {
   }
 }
 
-tr:nth-child(even) { 
+tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 

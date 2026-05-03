@@ -1,92 +1,54 @@
 <template>
   <v-app id="app">
-    <v-navigation-drawer v-model="drawer" clipped app>
-      <v-list dense>
-        <v-list-tile :to="{path: '/monitoring'}">
-          <v-list-tile-action>
-            <v-icon>dashboard</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Monitoring</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile :to="{path: '/train'}">
-          <v-list-tile-action>
-            <v-icon>train</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Train</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile :to="{path: '/home-automation'}">
-          <v-list-tile-action>
-            <v-icon>home</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Domotique</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile :to="{path: '/family'}">
-          <v-list-tile-action>
-            <v-icon>trending_up</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Famille</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile :to="{path: '/sms'}">
-          <v-list-tile-action>
-            <v-icon>message</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>SMS</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+    <v-navigation-drawer v-model="drawer" app>
+      <v-list nav>
+        <v-list-item
+          v-for="item in navigationItems"
+          :key="item.to"
+          :to="item.to"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          rounded="lg"
+        />
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar color="indigo" dark app>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Services Aumjaud</v-toolbar-title>
+    <v-app-bar color="indigo" density="comfortable">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-title>Services Aumjaud</v-app-bar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-menu offset-y>
-          <!-- 
-          <v-icon medium slot="activator" class="mx-aut">person</v-icon>
-          <v-list>
-            <v-list-tile >
-              <v-list-tile-title>AA</v-list-tile-title>
-              <v-list-tile-title>BA</v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-          -->
-        </v-menu>
-      </v-toolbar-items>    
-    </v-toolbar>
+    </v-app-bar>
 
-    <v-content>
-      <v-container fluid >
+    <v-main>
+      <v-container fluid>
         <router-view />
       </v-container>
-    </v-content>
+    </v-main>
 
-    <v-footer color="indigo" app>
-      <span class="white--text">&copy; aumjaud 2018-2024</span>
+    <v-footer color="indigo" app class="justify-center">
+      <span class="white--text">&copy; aumjaud 2018-2026</span>
     </v-footer>
-
   </v-app>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      drawer: null
-    })
-  }
+export default {
+  data: () => ({
+    drawer: false,
+    navigationItems: [
+      { to: '/monitoring', title: 'Monitoring', icon: 'mdi-view-dashboard' },
+      { to: '/train', title: 'Train', icon: 'mdi-train' },
+      { to: '/home-automation', title: 'Domotique', icon: 'mdi-home' },
+      { to: '/family', title: 'Famille', icon: 'mdi-chart-line' },
+      { to: '/sms', title: 'SMS', icon: 'mdi-message-text' },
+    ],
+  }),
+}
 </script>
 
 <style lang="scss">
-  .container {
+  .container,
+  .v-container {
     button {
       border: none;
       border-radius: 10px;

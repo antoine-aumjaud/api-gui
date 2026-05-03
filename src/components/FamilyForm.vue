@@ -34,7 +34,7 @@
       </fieldset>
       <div class="failed" v-html="error"></div>
       <button type="button" @click="save()">Sauvegarder</button>
-      <router-link to="/family" tag="button">Retour</router-link>
+      <button type="button" @click="$router.push('/family')">Retour</button>
     </form>
   </div>
 </template>
@@ -89,7 +89,7 @@
               success = await familyService.saveShoesSize(this.name, this.value, this.date);
               break;
           }
-          if(success) { this.$router.push({ path: 'family' }); /*this.error = ''*/ }
+          if(success) { this.$router.push({ path: '/family' }); /*this.error = ''*/ }
           else { this.error = 'La sauvegarde a échouée'; }
         }
       }
