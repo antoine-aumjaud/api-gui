@@ -9,6 +9,7 @@ const routes = [
   {
     path: '/monitoring',
     name: 'monitoring',
+    meta: { public: true },
     component: () => import('./components/Monitoring.vue'),
   },
   {

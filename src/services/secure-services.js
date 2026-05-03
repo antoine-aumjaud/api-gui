@@ -77,6 +77,12 @@ async function auth(login, password) {
     return false;
   }
 }
+
+function logout() {
+  secureToken = null;
+  storeToken(null);
+}
+
 async function renewToken() {
   if(isRenewingToken) return;
   isRenewingToken = true;
@@ -193,6 +199,7 @@ export default {
   isTokenValid,
   getTokenLogin,
   auth,
+  logout,
 
   //Check if user is authenticated, otherwhise redirect to signin page
   secureAccess,
