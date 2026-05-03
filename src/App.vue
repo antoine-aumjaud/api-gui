@@ -17,6 +17,24 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-app-bar-title>Services Aumjaud</v-app-bar-title>
       <v-spacer></v-spacer>
+      <v-btn
+        v-if="!isAuthenticated"
+        variant="text"
+        color="white"
+        prepend-icon="mdi-login"
+        @click="goToSignIn"
+      >
+        Connexion
+      </v-btn>
+      <v-btn
+        v-else
+        variant="text"
+        color="white"
+        prepend-icon="mdi-logout"
+        @click="logout"
+      >
+        Déconnexion
+      </v-btn>
     </v-app-bar>
 
     <v-main>
@@ -32,9 +50,12 @@
 </template>
 
 <script>
+import secureServices from './services/secure-services'
+
 export default {
   data: () => ({
     drawer: false,
+    isAuthenticated: secureServices.isTokenValid(),
     navigationItems: [
       { to: '/monitoring', title: 'Monitoring', icon: 'mdi-view-dashboard' },
       { to: '/home-automation', title: 'Domotique', icon: 'mdi-home' },
@@ -42,6 +63,22 @@ export default {
       { to: '/sms', title: 'SMS', icon: 'mdi-message-text' },
     ],
   }),
+  watch: {
+    $route() {
+      this.isAuthenticated = secureServices.isTokenValid()
+    },
+  },
+  methods: {
+    goToSignIn() {
+      const redirect = this.$route.fullPath || '/'
+      this.$router.push({ name: 'signin', query: { redirect } })
+    },
+    logout() {
+      secureServices.logout()
+      this.isAuthenticated = false
+      this.$router.push({ name: 'signin', query: { redirect: '/' } })
+    },
+  },
 }
 </script>
 
