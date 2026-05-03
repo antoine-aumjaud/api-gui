@@ -37,7 +37,6 @@ export default {
     drawer: false,
     navigationItems: [
       { to: '/monitoring', title: 'Monitoring', icon: 'mdi-view-dashboard' },
-      { to: '/train', title: 'Train', icon: 'mdi-train' },
       { to: '/home-automation', title: 'Domotique', icon: 'mdi-home' },
       { to: '/family', title: 'Famille', icon: 'mdi-chart-line' },
       { to: '/sms', title: 'SMS', icon: 'mdi-message-text' },

@@ -41,12 +41,7 @@ const routes = [
     path: '/sms',
     name: 'sms',
     component: () => import('./components/SMS.vue'),
-  },
-  {
-    path: '/train',
-    name: 'train',
-    component: () => import('./components/Train.vue'),
-  },
+  }
 ]
 
 const router = createRouter({
