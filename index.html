@@ -6,6 +6,18 @@
     <link rel="icon" href="/favicon.png" />
     <link rel="manifest" href="/manifest.json" />
     <title>Services Aumjaud</title>
+    <script type="text/javascript">
+      // GitHub Pages routing fix
+      (function() {
+        if (window.location.search[1] === 'p') {
+          var redirect = window.location.search.slice(1).split('&').map(function(c) {
+            return c.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+            window.location.pathname.slice(0, -1) + '/' + redirect);
+        }
+      }());
+    </script>
   </head>
   <body>
     <noscript>
