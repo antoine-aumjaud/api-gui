@@ -2,9 +2,6 @@
 
 ## Prerequisites
 
-- Node.js 20.x to 24.x
-- npm 10.x to 11.x
-
 Build and push master to gh-pages branch:
 
 [![Node.js CI](https://github.com/antoine-aumjaud/api-gui/actions/workflows/build_and_push.yml/badge.svg?branch=master)](https://github.com/antoine-aumjaud/api-gui/actions/workflows/build_and_push.yml)
@@ -12,11 +9,7 @@ Build and push master to gh-pages branch:
 
 ## Deployment
 
-Automatic deploy to gh-pages branch:  
+Automatically deploys the gh-pages branch to GitHub Pages https://canda.aumjaud.fr (hosted by GitHub):
+
 [![pages-build-deployment](https://github.com/antoine-aumjaud/api-gui/actions/workflows/pages/pages-build-deployment/badge.svg?branch=gh-pages)](https://github.com/antoine-aumjaud/api-gui/actions/workflows/pages/pages-build-deployment)
 
-Link: https://canda.aumjaud.fr (hosted by GitHub)
-
-
-## TODO
-[ ] vue new version https://www.vuemastery.com/blog/vue-3-migration-build/
